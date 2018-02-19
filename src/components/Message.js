@@ -1,41 +1,41 @@
 import React from 'react'
 
-const Message = ({ message, toggleMessageChange }) => {
+const Message = ({ message, userReadMessage, userStarredMessage, userSelectedMessage }) => {
     let labels = message.labels.map( (label, index) => {
         return (
             <span key={index} className="label label-warning">{label}</span>
         )
     } )
     return (
-        <div 
+        <div
             className={`row message ${message.read ? 'read' : 'unread'} ${message.selected ? 'selected' : ''}`}
         >
-        <div 
+        <div
             className="col-xs-1"
         >
-            <div 
+            <div
                 className="row"
             >
-            <div 
+            <div
                 className="col-xs-2"
             >
-                <input 
-                    type="checkbox" 
-                    onChange={() => toggleMessageChange(message, 'selected')}
+                <input
+                    type="checkbox"
+                    onChange={() => userSelectedMessage(message)}
                     checked={message.selected}
                 />
             </div>
             <div className="col-xs-2">
-                <i 
-                    className={`star fa fa-star${message.starred ? '' : '-o'}`} 
-                    onClick={() => toggleMessageChange(message, 'starred')}
+                <i
+                    className={`star fa fa-star${message.starred ? '' : '-o'}`}
+                    onClick={() => userStarredMessage(message)}
                 ></i>
             </div>
             </div>
         </div>
-        <div 
-            className="col-xs-11" 
-            onClick={() => toggleMessageChange(message, 'read')}
+        <div
+            className="col-xs-11"
+            onClick={() => userReadMessage(message)}
         >
             {labels}
             <a href="#">

@@ -72,19 +72,18 @@ class App extends Component {
     ]
   }
 
-  toggleMessageChange = (message, action) => {
-    if (action === 'read') {
-      message.read = 'read'
-    }
+  userReadMessage = (message) => {
+    message.read = 'read'
+    this.setState(this.state.messages.concat(message))
+  }
 
-    if (action === 'starred') {
-      message.starred = !message.starred
-    }
+  userStarredMessage = (message) => {
+    message.starred = !message.starred
+    this.setState(this.state.messages.concat(message))
+  }
 
-    if (action === 'selected') {
-      message.selected = !message.selected
-    }
-
+  userSelectedMessage = (message) => {
+    message.selected = !message.selected
     this.setState(this.state.messages.concat(message))
   }
 
@@ -115,7 +114,7 @@ class App extends Component {
       //uncheck all
       this.setState({
         messages: this.state.messages.map( message => {
-          message.selected = false 
+          message.selected = false
           return message
         } )
       })
@@ -123,7 +122,7 @@ class App extends Component {
       //check all
       this.setState({
         messages: this.state.messages.map( message => {
-          message.selected = true 
+          message.selected = true
           return message
         } )
       })
@@ -157,24 +156,26 @@ class App extends Component {
       this.setState(this.state.messages.concat( selectedMessages.map( message => {
         message.labels.splice(action, 1)
         return message
-      }) ))      
+      }) ))
     }
   }
 
   render() {
     return (
       <div className="App">
-        <Toolbar 
-          messages={this.state.messages} 
+        <Toolbar
+          messages={this.state.messages}
           selectedIndicator={this.selectedIndicator}
           selectedIndicatorInteractionFunc={this.selectedIndicatorInteractionFunc}
           markAsReadButtonFunc={this.markAsReadButtonFunc}
-          deleteMessageButtonFunc={this.deleteMessageButtonFunc} 
+          deleteMessageButtonFunc={this.deleteMessageButtonFunc}
           applyLabelDropDownFunc={this.applyLabelDropDownFunc}
         />
-        <Messages 
+        <Messages
           messages={this.state.messages}
-          toggleMessageChange={this.toggleMessageChange}  
+          userReadMessage={this.userReadMessage}
+          userStarredMessage={this.userStarredMessage}
+          userSelectedMessage={this.userSelectedMessage}
         />
       </div>
     );
